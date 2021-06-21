@@ -1,0 +1,12 @@
+﻿.list {
+    max-width: 1280px;
+    padding-right: 70px;
+    padding-left: 70px;
+}
+
+@media (max-width: 600px) {
+    .list {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+}

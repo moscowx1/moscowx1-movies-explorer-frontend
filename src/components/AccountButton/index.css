@@ -1,0 +1,19 @@
+﻿.account-btn {
+  color: white;
+  background-color: transparent;
+  border: 2px solid rgba(128, 128, 128, .2);
+  box-sizing: border-box;
+  border-radius: 50px;
+  width: 100px;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 32px;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.account-btn__image {
+  padding-left: 6px;
+}

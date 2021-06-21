@@ -1,0 +1,22 @@
+﻿.filter {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 40px 0;
+    cursor: pointer;
+    line-height: 18px;
+}
+
+.filter__image {
+    padding-right: 10px;
+    width: 36px;
+    height: 20px;
+}
+
+.filter__text {
+    display: flex;
+    font-size: 13px;
+    line-height: 18px;
+    color: white;
+}
+
