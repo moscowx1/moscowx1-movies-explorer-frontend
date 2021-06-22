@@ -3,7 +3,8 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 import Header from '../Header';
 import Main from '../Main';
 import Footer from '../Footer';
-import Movies from '../SavedMovies/';
+import SavedMovies from '../Movies/SavedMovies.js';
+import AllMovies from '../Movies/AllMovies.js';
 import Register from '../Register/';
 import Login from '../Login';
 import Profile from '../Profile';
@@ -18,8 +19,11 @@ function App() {
     <div className='app'>
       <Header/>
       <Switch>
-        <Route path={ paths.movies }>
-          <Movies/>
+        <Route path={ paths.savedMovies }>
+          <SavedMovies/>
+        </Route>
+        <Route path={ paths.allMovies} >
+          <AllMovies/>
         </Route>
         <Route path={ paths.signIn }>
           <Register/>

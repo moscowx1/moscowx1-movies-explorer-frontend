@@ -24,7 +24,7 @@ const Menu = () => {
             </NavLink>
           </li>
           <li className='menu__link-wrapper'>
-            <NavLink to={ paths.movies }
+            <NavLink to={ paths.allMovies }
                      className='menu__link'>
               Фильмы
             </NavLink>

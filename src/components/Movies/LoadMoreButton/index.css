@@ -1,10 +1,4 @@
-﻿.movies {
-  background-color: #202020;
-  display: flex;
-  flex-direction: column;
-}
-
-.movies__more-btn {
+﻿.movies__more-btn {
   margin: 90px auto 60px;
   width: 320px;
   height: 36px;
