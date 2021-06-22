@@ -45,6 +45,7 @@
     font-family: Inter, Arial, Helvetica, sans-serif;
     font-size: 12px;
     line-height: 16px;
+    border: none;
 }
 
 .header__button_long-text {
