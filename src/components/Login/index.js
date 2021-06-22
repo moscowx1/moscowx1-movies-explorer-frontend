@@ -7,17 +7,29 @@ import './index.css';
 const Login = () => {
   const inputs = [
     {
-      type: 'text',
       name: 'Имя',
+      attr: {
+        type: 'text',
+        placeholder: 'Имя',
+        required : 'required',
+      },
     },
     {
-      type: 'email',
       name: 'E-mail',
+      attr: {
+        placeholder: 'e-mail',
+        type: 'email',
+        required : 'required',
+      }
     },
     {
-      type: 'password',
-      name: 'password'
-    }
+      name: 'password',
+      attr: {
+        placeholder: 'пароль',
+        type: 'password',
+        required : 'required',
+      }
+    },
   ];
 
   const link = {

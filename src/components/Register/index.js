@@ -7,13 +7,21 @@ import './index.css';
 const Register = () => {
   const inputs = [
     {
-      type: 'email',
       name: 'E-mail',
+      attr: {
+        placeholder: 'E-mail',
+        type: 'email',
+        required: 'required',
+      }
     },
     {
-      type: 'password',
-      name: 'password'
-    }
+      name: 'password',
+      attr: {
+        placeholder: 'пароль',
+        type: 'password',
+        required : 'required',
+      }
+    },
   ];
 
   const link = {

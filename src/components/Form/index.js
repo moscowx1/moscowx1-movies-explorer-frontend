@@ -11,7 +11,8 @@ const Form = ({name, inputs, submit, caption, link}) => {
           return (
             <React.Fragment key={id}>
               <label className='form__label'>{ input.name }</label>
-              <input type={ input.type } className='form__input'/>
+              <input className='form__input'
+                {...input.attr}/>
             </React.Fragment>
           );
         })
