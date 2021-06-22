@@ -72,6 +72,7 @@
     grid-area: promo__world-image;
     object-fit: contain;
     object-position: right bottom;
+  mix-blend-mode: screen;
 }
 
 .promo__span {
