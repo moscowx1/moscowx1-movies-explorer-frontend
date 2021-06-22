@@ -35,10 +35,6 @@
   height: 12px;
 }
 
-.movie__button-img_active {
-
-}
-
 .movie__title {
   grid-area: title;
   font-size: 18px;
