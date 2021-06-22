@@ -1,18 +1,12 @@
 ﻿import './index.css';
 
-import checkbox from '../../../../images/checkbox.png'
-
 const ShortMovieFilter = () => {
 	return (
-			<label htmlFor='short-movie'
-						 className='filter'>
-				<img src={checkbox}
-             className='filter__image'
-        alt='checkbox'/>
-				<span className='filter__text'>
-					Короткометражки
-				</span>
-			</label>
+    <div className="filter">
+      <input className="filter__checkbox"
+        type="checkbox"/>
+      <p className='filter__caption'>Короткометражки</p>
+    </div>
 	);
 };
 
