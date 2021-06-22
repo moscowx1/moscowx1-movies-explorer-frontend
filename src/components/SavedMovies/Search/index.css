@@ -1,72 +1,77 @@
 ﻿.search {
-    padding: 70px 70px 10px;
-    background-color: #202020;
+  padding: 70px 70px 10px;
+  background-color: #202020;
 }
 
 .search__form {
-    display: flex;
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
-    padding: 0 10px 0 0;
-    border: 1.5px solid rgba(170, 170, 170, .2);
-    box-sizing: border-box;
-    border-radius: 8px;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px 0 0;
+  border: 1.5px solid rgba(170, 170, 170, .2);
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.search__form:focus-within {
+  border: 1px solid rgba(200, 200, 170, .7);
 }
 
 .search__input {
-    flex: 1;
-    box-sizing: border-box;
-    margin-right: 14px;
-    padding-left: 40px;
-    color: #8B8B8B;
-    border: 0;
-    outline: 0;
-    background-color: #202020;
-    font-size: 18px;
-    line-height: 20px;
+  flex: 1;
+  box-sizing: border-box;
+  margin-right: 14px;
+  padding-left: 10px;
+  color: #8B8B8B;
+  border: 0;
+  outline: 0;
+  background-color: #202020;
+  font-size: 18px;
+  line-height: 20px;
 }
 
 .search__submit {
-    padding: 15px 35px;
-    cursor: pointer;
-    text-align: center;
-    color: #fff;
-    border: 0;
-    border-radius: 5px;
-    background: #4285F4;
-    font-size: 11px;
-    font-weight: 500;
-    line-height: 18px;
+  margin: 10px 0;
+  padding: 15px 35px;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  border: 0;
+  border-radius: 5px;
+  background: #4285F4;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 18px;
 }
 
 @media (max-width: 768px) {
-    .search {
-        padding-top: 80px;
-        padding-right: 30px;
-        padding-left: 30px;
-    }
+  .search {
+    padding-top: 80px;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
 
-    .search__search {
-        margin-right: 19px;
-    }
+  .search__search {
+    margin-right: 19px;
+  }
 
-    .search__form {
-        padding-right: 20px;
-    }
-
-    .search__submit {
-        margin: 1px 19px 0 0;
-    }
+  .search__form {
+    padding-right: 20px;
+  }
 }
 
 @media (max-width: 530px) {
-    .search {
-        padding: 80px 5px 10px;
-    }
-    
-    .search__input {
-        font-size: 14px;
-        line-height: 20px;
-    }
+  .search {
+    padding: 80px 5px 10px;
+  }
+
+  .search__input {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .search__submit {
+    padding: 10px 30px;
+  }
 }
