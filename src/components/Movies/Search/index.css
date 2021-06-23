@@ -45,6 +45,11 @@
   line-height: 18px;
 }
 
+.search__submit:hover {
+  opacity: .8;
+  transition: .5s opacity ease-in-out;
+}
+
 @media (max-width: 768px) {
   .search {
     padding-top: 80px;
@@ -54,10 +59,6 @@
 
   .search__search {
     margin-right: 19px;
-  }
-
-  .search__form {
-    padding-right: 20px;
   }
 }
 

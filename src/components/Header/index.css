@@ -46,6 +46,7 @@
     font-size: 12px;
     line-height: 16px;
     border: none;
+  cursor: pointer;
 }
 
 .header__button_long-text {

@@ -1,26 +1,18 @@
 ﻿import './index.css';
 
-// import favorite from '../../../../images/favorite.svg';
-import cross from '../../../../images/cross.svg';
-import heart from '../../../../images/heart.svg';
-import activeHeart from '../../../../images/activeHeart.svg';
-
-const Movie = ({name, duration, img, mode, isActive}) => {
-  const btnImage = mode === 0
-    ? isActive ? activeHeart : heart
-    : cross;
-
+const Movie = ({data, handleBtnClick}) => {
   return (
     <li className='movie'>
-      <p className='movie__title'>name</p>
-      <time className='movie__duration'>duration</time>
-      <button className='movie__button'>
+      <p className='movie__title'>{ data.name }</p>
+      <time className='movie__duration'>{ data.duration }</time>
+      <button className='movie__button'
+              onClick={ () => handleBtnClick(data.id) }>
         <img className='movie__button-img'
-             src={ btnImage }
+             src={ data.btnImg }
              alt='btn-image'/>
       </button>
       <img className='movie__preview'
-           src={ img }
+           src={ data.img }
            alt='more image'/>
     </li>
   );

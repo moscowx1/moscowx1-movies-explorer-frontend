@@ -7,10 +7,14 @@
   z-index: 1;
   right: 0;
   top: 0;
-  display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  display: none;
+}
+
+.menu_opened {
+  display: flex;
 }
 
 .menu__links-wrapper {
@@ -33,6 +37,7 @@
   position: absolute;
   right: 10px;
   top: 10px;
+  cursor: pointer;
 }
 
 @media (max-width: 400px) {

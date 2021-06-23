@@ -7,13 +7,14 @@ import paths from '../../utils/constants/paths';
 import cross from '../../images/cross.svg';
 import './index.css';
 
-const Menu = () => {
+const Menu = ({isOpen, handleCloseClick}) => {
   return (
-    <div className='menu'>
+    <div className={ `menu ${ isOpen ? 'menu_opened' : '' }` }>
       <button className='menu__close'>
         <img src={ cross }
              alt='значок закрытия'
-             className='menu__close-icon'/>
+             className='menu__close-icon'
+             onClick={ handleCloseClick }/>
       </button>
       <nav className='menu__nav'>
         <ul className='menu__links-wrapper'>
