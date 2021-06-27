@@ -41,6 +41,10 @@
   border: none;
 }
 
+.form__submit:disabled {
+  opacity: .6;
+}
+
 .form__caption-container {
   display: flex;
   margin: auto;

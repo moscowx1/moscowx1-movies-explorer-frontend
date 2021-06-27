@@ -12,6 +12,7 @@ const Register = () => {
         placeholder: 'E-mail',
         type: 'email',
         required: 'required',
+        minLength: 2,
       }
     },
     {
@@ -19,7 +20,8 @@ const Register = () => {
       attr: {
         placeholder: 'пароль',
         type: 'password',
-        required : 'required',
+        required: 'required',
+        minLength: 2,
       }
     },
   ];
@@ -32,10 +34,10 @@ const Register = () => {
   return (
     <section className="register">
       <Form name='register'
-            inputs={ inputs }
-            submit='Регистрация'
-            caption='Ещё не зарегистрированы?'
-            link={ link }/>
+        inputs={inputs}
+        submit='Регистрация'
+        caption='Ещё не зарегистрированы?'
+        link={link} />
     </section>
   );
 };

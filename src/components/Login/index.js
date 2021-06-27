@@ -11,7 +11,8 @@ const Login = () => {
       attr: {
         type: 'text',
         placeholder: 'Имя',
-        required : 'required',
+        required: 'required',
+        minLength: 2,
       },
     },
     {
@@ -19,7 +20,8 @@ const Login = () => {
       attr: {
         placeholder: 'e-mail',
         type: 'email',
-        required : 'required',
+        required: 'required',
+        minLength: 2,
       }
     },
     {
@@ -27,7 +29,7 @@ const Login = () => {
       attr: {
         placeholder: 'пароль',
         type: 'password',
-        required : 'required',
+        required: 'required',
       }
     },
   ];
@@ -40,10 +42,10 @@ const Login = () => {
   return (
     <section className="login">
       <Form name='login'
-            inputs={ inputs }
-            submit='Зарегестрироваться'
-            caption='Уже зарегистрированы?'
-            link={ link }/>
+        inputs={inputs}
+        submit='Зарегестрироваться'
+        caption='Уже зарегистрированы?'
+        link={link} />
     </section>
   );
 };
