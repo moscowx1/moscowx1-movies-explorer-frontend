@@ -1,0 +1,9 @@
+﻿.movies__more-btn {
+  margin: 90px auto 60px;
+  width: 320px;
+  height: 36px;
+  background: #2F2F2F;
+  border-radius: 6px;
+  color: white;
+  border: none;
+}

@@ -1,0 +1,47 @@
+﻿.menu {
+  background: #202020;
+  color: white;
+  min-height: 100vh;
+  width: 60%;
+  position: fixed;
+  z-index: 1;
+  right: 0;
+  top: 0;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  display: none;
+}
+
+.menu_opened {
+  display: flex;
+}
+
+.menu__links-wrapper {
+  margin: 0;
+}
+
+.menu__link-wrapper {
+  list-style-type: none;
+  padding-bottom: 30px;
+}
+
+.menu__link {
+  color: white;
+  text-decoration: none;
+}
+
+.menu__close {
+  background: transparent;
+  border: none;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 400px) {
+  .menu {
+    width: 100%;
+  }
+}

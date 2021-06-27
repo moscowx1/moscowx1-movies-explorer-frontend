@@ -1,0 +1,129 @@
+﻿.header {
+    background-color: #073042;
+    margin: 0;
+    padding: 20px 70px 0;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_color_g {
+  background-color: #202020;
+}
+
+.header__container {
+  margin: auto;
+  max-width: 400px;
+  width: 100%;
+}
+
+.header__title {
+  font-size: 24px;
+  line-height: 29px;
+  color: white;
+  margin: 0;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.header__logo {
+    justify-self: start;
+    max-width: 38px;
+    max-height: 38px;
+}
+
+.header__logo_top-padding_b {
+  padding-top: 70px;
+}
+
+.header__button {
+    border-radius: 5px;
+    width: 76px;
+    height: 32px;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    border: none;
+  cursor: pointer;
+}
+
+.header__button_long-text {
+    width: 150px;
+}
+
+.header__button_transparent {
+    background-color: transparent;
+    border: none;
+    color: #FFFFFF;
+}
+
+.header__button_green {
+    background-color: #3DDC84;
+    color: black;
+}
+
+.header__button_account {
+    color: white;
+    background-color: transparent;
+    border: 2px solid rgba(128, 128, 128, .2);
+    box-sizing: border-box;
+    border-radius: 50px;
+    width: 100px;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__button_menu {
+    width: 44px;
+    height: 44px;
+}
+
+.header__button:not(:first-child) {
+    margin-left: 50px;
+}
+
+.header__link {
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 18px;
+    color: white;
+    margin-right: 18px;
+}
+
+.header__elem_display_s {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .header__elem_display_b {
+        display: none;
+    }
+
+    .header__elem_display_s {
+        display: block;
+    }
+
+    .header {
+        padding: 20px 10px 0;
+    }
+
+    .header__button:not(:first-child) {
+        margin-left: 14px;
+    }
+}
+
+@media (max-width: 500px) {
+  .header__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header__logo_top-padding_b {
+    padding-top: 30px;
+    padding-bottom:10px;
+  }
+}
