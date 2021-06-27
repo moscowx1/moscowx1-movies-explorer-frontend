@@ -1,5 +1,5 @@
-import {Route, Switch, Redirect} from 'react-router-dom';
-import {useState} from "react";
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { useState } from "react";
 
 
 import Header from '../Header';
@@ -11,7 +11,8 @@ import Register from '../Register/';
 import Login from '../Login';
 import Profile from '../Profile';
 import NotFound from '../Errors/NotFound';
-import Menu from "../Menu";
+import Menu from '../Menu';
+import ProtectedRoute from '../ProtectedRoute';
 
 import paths from '../../utils/constants/paths';
 
@@ -22,36 +23,39 @@ function App() {
   const openMenu = () => setIsMenuOpened(true);
   const closeMenu = () => setIsMenuOpened(false);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
   return (
     <div className='app'>
-      <Header handleMenuClick={ openMenu }/>
+      <Header handleMenuClick={openMenu} />
       <Switch>
-        <Route path={ paths.savedMovies }>
-          <SavedMovies/>
+        <ProtectedRoute path={paths.savedMovies}
+          component={SavedMovies}
+          isLoggedIn={isLoggedIn} />
+        <ProtectedRoute path={paths.allMovies}
+          component={AllMovies}
+          isLoggedIn={isLoggedIn} />
+        <Route path={paths.signIn}>
+          <Register />
         </Route>
-        <Route path={ paths.allMovies }>
-          <AllMovies/>
+        <Route path={paths.signUp}>
+          <Login />
         </Route>
-        <Route path={ paths.signIn }>
-          <Register/>
+        <ProtectedRoute path={paths.profile}
+          component={Profile}
+          isLoggedIn={isLoggedIn} />
+        <Route path={paths.main} exact={true}>
+          <Main />
         </Route>
-        <Route path={ paths.signUp }>
-          <Login/>
+        <Route path={paths.notFound}>
+          <NotFound />
         </Route>
-        <Route path={ paths.profile }>
-          <Profile/>
-        </Route>
-        <Route path={ paths.main } exact={ true }>
-          <Main/>
-        </Route>
-        <Route path={ paths.notFound }>
-          <NotFound/>
-        </Route>
-        <Redirect to={ paths.notFound }/>
+        <Redirect to={paths.notFound} />
       </Switch>
-      <Menu isOpen={ isMenuOpened }
-            handleCloseClick={ closeMenu }/>
-      <Footer/>
+      <Menu isOpen={isMenuOpened}
+        handleCloseClick={closeMenu} />
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 ﻿import {useHistory, Link} from 'react-router-dom';
 import {useEffect, useState} from "react";
 
+import { browserHistory} from 'react-router-dom';
+
 import Links from './Links';
 
 import paths from '../../utils/constants/paths';
@@ -11,9 +13,7 @@ const Footer = () => {
 	const history = useHistory();
 	const [content, setContent] = useState(getContent(history.location.pathname));
 
-	useEffect(() => {
-		history.listen(({pathname}) => setContent(getContent(pathname)))
-	}, []);
+  history.listen(({pathname}) => setContent(getContent(pathname)));
 
 	function getContent(path) {
 	  path = path.toLowerCase();

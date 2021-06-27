@@ -14,9 +14,7 @@ const Header = ({handleMenuClick}) => {
   const history = useHistory();
   const [content, setContent] = useState(getContent(history.location.pathname));
 
-  useEffect(() => {
-    history.listen(({pathname}) => setContent(getContent(pathname)));
-  }, [history]);
+  history.listen(({pathname}) => setContent(getContent(pathname)));
 
   function getContent(path) {
     path = path.toLowerCase();
@@ -76,7 +74,7 @@ const Header = ({handleMenuClick}) => {
           </header>
         );
       default:
-        return "";
+        return '';
     }
   }
 
