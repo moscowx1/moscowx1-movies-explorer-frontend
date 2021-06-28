@@ -7,16 +7,8 @@ import './index.css';
 const Login = () => {
   const inputs = [
     {
-      name: 'Имя',
-      attr: {
-        type: 'text',
-        placeholder: 'Имя',
-        required: 'required',
-        minLength: 2,
-      },
-    },
-    {
-      name: 'E-mail',
+      name: 'email',
+      caption: 'E-mail',
       attr: {
         placeholder: 'e-mail',
         type: 'email',
@@ -26,6 +18,7 @@ const Login = () => {
     },
     {
       name: 'password',
+      caption: 'Пароль',
       attr: {
         placeholder: 'пароль',
         type: 'password',
@@ -35,7 +28,7 @@ const Login = () => {
   ];
 
   const link = {
-    link: paths.signIn,
+    link: paths.register,
     text: 'Войти'
   }
 
@@ -43,7 +36,7 @@ const Login = () => {
     <section className="login">
       <Form name='login'
         inputs={inputs}
-        submit='Зарегестрироваться'
+        submitTxt='Зарегестрироваться'
         caption='Уже зарегистрированы?'
         link={link} />
     </section>

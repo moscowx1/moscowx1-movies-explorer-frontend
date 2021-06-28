@@ -25,7 +25,7 @@ const Menu = ({isOpen, handleCloseClick}) => {
             </NavLink>
           </li>
           <li className='menu__link-wrapper'>
-            <NavLink to={ paths.allMovies }
+            <NavLink to={ paths.movies }
                      className='menu__link'>
               Фильмы
             </NavLink>

@@ -33,13 +33,13 @@ function App() {
         <ProtectedRoute path={paths.savedMovies}
           component={SavedMovies}
           isLoggedIn={isLoggedIn} />
-        <ProtectedRoute path={paths.allMovies}
+        <ProtectedRoute path={paths.movies}
           component={AllMovies}
           isLoggedIn={isLoggedIn} />
-        <Route path={paths.signIn}>
+        <Route path={paths.register}>
           <Register />
         </Route>
-        <Route path={paths.signUp}>
+        <Route path={paths.login}>
           <Login />
         </Route>
         <ProtectedRoute path={paths.profile}
