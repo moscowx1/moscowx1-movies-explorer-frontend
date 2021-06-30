@@ -47,11 +47,9 @@ const Header = ({ handleMenuClick }) => {
         return (
           <header className='header header_style_column header_color_g'>
             <div className='header__container'>
-              <img
-                className='header__logo header__logo_top-padding_b'
+              <img className='header__logo header__logo_top-padding_b'
                 src={logo}
-                alt='logo'
-              />
+                alt='logo' />
               <h2 className='header__title'>{title}</h2>
             </div>
           </header>
