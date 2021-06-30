@@ -5,7 +5,7 @@ import { useState } from "react";
 import Header from '../Header';
 import Main from '../Main';
 import Footer from '../Footer';
-import SavedMovies from '../Movies/SavedMovies.js';
+import Movies from '../Movies/Movies.js';
 import AllMovies from '../Movies/AllMovies.js';
 import Register from '../Register/';
 import Login from '../Login';
@@ -31,7 +31,7 @@ function App() {
       <Header handleMenuClick={openMenu} />
       <Switch>
         <ProtectedRoute path={paths.savedMovies}
-          component={SavedMovies}
+          component={Movies}
           isLoggedIn={isLoggedIn} />
         <ProtectedRoute path={paths.movies}
           component={AllMovies}

@@ -8,7 +8,7 @@ import MovieWrapper from './MovieWrapper';
 import heart from '../../images/heart.svg';
 import activeHeart from '../../images/activeHeart.svg';
 
-const AllMovies = () => {
+const Movies = () => {
   const [movies, setMovies] = useState([
     {
       id: 1,
@@ -65,4 +65,4 @@ const AllMovies = () => {
   );
 };
 
-export default AllMovies;
+export default Movies;
