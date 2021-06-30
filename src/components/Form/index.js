@@ -56,7 +56,7 @@ const Form = ({ name, inputs, submitTxt, caption, link, submit }) => {
         {inputs.map((input, id) => {
           const inputInfo = inputsInfo.find(i => i.name === input.name);
           const { isValid,
-                  error } = inputInfo;
+            error } = inputInfo;
           return (
 
             <React.Fragment key={id}>

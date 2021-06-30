@@ -1,4 +1,4 @@
-﻿import {useEffect, useState} from "react";
+﻿import { useEffect, useState } from "react";
 
 import Search from './Search';
 import List from './List';
@@ -58,9 +58,9 @@ const Movies = () => {
 
   return (
     <MovieWrapper>
-      <Search/>
-      <List movies={ movies } handleBtnClick={ toggleActiveBtn }/>
-      <LoadMoreButton/>
+      <Search />
+      <List movies={movies} handleBtnClick={toggleActiveBtn} />
+      <LoadMoreButton />
     </MovieWrapper>
   );
 };

@@ -1,9 +1,9 @@
 ﻿import './index.css';
 
-const MovieWrapper = ({children}) => {
+const MovieWrapper = ({ children }) => {
   return (
     <main className='movies'>
-      { children }
+      {children}
     </main>
   );
 }

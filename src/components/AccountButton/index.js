@@ -4,9 +4,9 @@ import './index.css';
 const AccountButton = () => {
   return (
     <button className='account-btn'>
-      <img src={ account }
+      <img src={account}
            alt='account'
-      className='account-btn__image'/>
+           className='account-btn__image' />
       Аккаунт
     </button>
   )

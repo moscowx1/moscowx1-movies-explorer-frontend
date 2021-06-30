@@ -1,4 +1,4 @@
-﻿import {useEffect, useState} from "react";
+﻿import { useEffect, useState } from "react";
 
 import Search from './Search';
 import List from './List';
@@ -42,9 +42,9 @@ const SavedMovies = () => {
 
   return (
     <MovieWrapper>
-      <Search/>
-      <List movies={ movies } handleBtnClick={ removeMovie }/>
-      <LoadMoreButton/>
+      <Search />
+      <List movies={movies} handleBtnClick={removeMovie} />
+      <LoadMoreButton />
     </MovieWrapper>
   );
 }
