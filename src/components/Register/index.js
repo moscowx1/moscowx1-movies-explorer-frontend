@@ -1,45 +1,14 @@
-﻿import { Redirect, useHistory } from 'react-router-dom';
+﻿import { useHistory } from 'react-router-dom';
 
 import Form from '../Form';
 
+import inputs from './inputs';
 import paths from '../../utils/constants/paths';
 import authApi from '../../utils/api/authApi';
 
 import './index.css';
 
 const Register = () => {
-  const inputs = [
-    {
-      name: 'name',
-      caption: 'Имя',
-      attr: {
-        type: 'text',
-        placeholder: 'имя',
-        required: 'required',
-        minLength: 2,
-      },
-    },
-    {
-      name: 'email',
-      caption: 'E-mail',
-      attr: {
-        placeholder: 'E-mail',
-        type: 'email',
-        required: 'required',
-        minLength: 2,
-      }
-    },
-    {
-      name: 'password',
-      caption: 'Пароль',
-      attr: {
-        placeholder: 'пароль',
-        type: 'password',
-        required: 'required',
-        minLength: 2,
-      }
-    },
-  ];
   const history = useHistory();
 
   const link = {

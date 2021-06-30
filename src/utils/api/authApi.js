@@ -21,6 +21,17 @@ class AuthApi {
     })
       .then(this.handleResponse);
   }
+
+  login(email, password) {
+    return fetch(`${this._host}/signin`, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({ email, password })
+    })
+      .then(this.handleResponse);
+  }
 }
 
 const authApi = new AuthApi("https://api.mantra.nomoredomains.club");

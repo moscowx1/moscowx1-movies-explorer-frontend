@@ -23,7 +23,7 @@ function App() {
   const openMenu = () => setIsMenuOpened(true);
   const closeMenu = () => setIsMenuOpened(false);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
 
   return (

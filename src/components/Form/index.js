@@ -1,6 +1,8 @@
 ﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import getInputError from '../../utils/getInputError';
+
 import './index.css';
 
 const Form = ({ name, inputs, submitTxt, caption, link, submit }) => {
@@ -9,6 +11,7 @@ const Form = ({ name, inputs, submitTxt, caption, link, submit }) => {
       name: input.name,
       isValid: !!input.attr.defaultValue,
       value: input.attr.defaultValue || '',
+      attributes: input.attr
     });
     return res;
   }, []));
@@ -21,7 +24,8 @@ const Form = ({ name, inputs, submitTxt, caption, link, submit }) => {
         return input;
 
       input.value = evt.target.value;
-      input.isValid = evt.target.validity.valid;
+      input.error = getInputError(input);
+      input.isValid = !input.error;
       return input;
     }));
     setIsFormValid(inputsInfo.every(info => info.isValid));
@@ -39,22 +43,29 @@ const Form = ({ name, inputs, submitTxt, caption, link, submit }) => {
       return res;
     }, {});
 
+    evt.target.closest('form').reset()
     submit(inputValues);
   }
 
   return (
     <form className="form"
       name={name}
-      onSubmit={handleSubmit}>
+      onSubmit={handleSubmit}
+      noValidate>
       <div className='form__section'>
         {inputs.map((input, id) => {
+          const inputInfo = inputsInfo.find(i => i.name === input.name);
+          const { isValid,
+                  error } = inputInfo;
           return (
+
             <React.Fragment key={id}>
               <label className='form__label'>{input.caption}</label>
-              <input className='form__input'
+              <input className={`form__input ${!isValid && 'form__input_onerror'}`}
                 name={input.name}
                 onChange={handleInputChange}
                 {...input.attr} />
+              {!isValid && <p className='form__error-caption'>{error}</p>}
             </React.Fragment>
           );
         })

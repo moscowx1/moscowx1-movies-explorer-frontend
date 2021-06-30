@@ -43,7 +43,7 @@ const Header = ({ handleMenuClick }) => {
       case paths.register:
       case paths.login:
         const title =
-          path === paths.register ? 'Рады видеть!' : 'Добро пожаловать';
+          path === paths.register ? 'Добро пожаловать' : 'Рады видеть!';
         return (
           <header className='header header_style_column header_color_g'>
             <div className='header__container'>
