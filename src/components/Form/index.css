@@ -25,6 +25,13 @@
   line-height: 16px;
   padding-bottom: 15px;
   padding-top: 15px;
+  padding-left: 10px;
+}
+
+.form__input:-webkit-autofill {
+  -webkit-text-fill-color: white;
+  box-shadow: 0 0 0px 1000px #2F2F2F inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .form__input_onerror {
@@ -87,16 +94,13 @@
   .form__section {
     min-width: 250px;
   }
-
   .form__section:last-child {
     padding-bottom: 30px;
   }
-
   .form__caption {
     font-size: 12px;
     line-height: 15px;
   }
-
   .form__link {
     font-size: 12px;
     line-height: 15px;
