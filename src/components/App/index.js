@@ -1,12 +1,11 @@
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useState } from "react";
 
-
 import Header from '../Header';
 import Main from '../Main';
 import Footer from '../Footer';
 import Movies from '../Movies/Movies.js';
-import AllMovies from '../Movies/AllMovies.js';
+import SavedMovies from '../Movies/SavedMovies.js';
 import Register from '../Register/';
 import Login from '../Login';
 import Profile from '../Profile';
@@ -31,10 +30,10 @@ function App() {
       <Header handleMenuClick={openMenu} />
       <Switch>
         <ProtectedRoute path={paths.savedMovies}
-          component={Movies}
+          component={SavedMovies}
           isLoggedIn={isLoggedIn} />
         <ProtectedRoute path={paths.movies}
-          component={AllMovies}
+          component={Movies}
           isLoggedIn={isLoggedIn} />
         <Route path={paths.register}>
           <Register />
