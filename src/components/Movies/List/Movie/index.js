@@ -7,13 +7,13 @@ const Movie = ({ data, handleBtnClick }) => {
       <time className='movie__duration'>{data.duration}</time>
       <button className='movie__button'
         onClick={() => handleBtnClick(data.id)}>
-        <image className='movie__button-img'
+        <img className='movie__button-img'
           src={data.btnImg}
-          alt='btn-image' />
+          alt='Превью фильма' />
       </button>
-      <image className='movie__preview'
+      <img className='movie__preview'
         src={data.img}
-        alt='more image' />
+        alt='Загрузить больше фильмов' />
     </li>
   );
 };
