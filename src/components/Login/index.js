@@ -1,40 +1,28 @@
 ﻿import { useHistory } from 'react-router';
+import { useContext } from 'react';
 
 import Form from '../Form';
 
+import { UserContext } from '../../context/userContext';
 import inputs from './inputs'
 import paths from '../../utils/constants/paths';
 import authApi from '../../utils/api/authApi';
 
 import './index.css';
 
-const Login = () => {
-  const history = useHistory();
-
+const Login = ({ handleLogin }) => {
   const link = {
     link: paths.register,
     text: 'Регистрация'
   }
 
-  const login = (inputs) => {
-    const email = inputs['email'];
-    const pwd = inputs['password'];
-
-    authApi
-      .login(email, pwd)
-      .then((res) => {
-        history.push(paths.movies);
-      })
-      .catch(err => console.log(err));
-  };
-
   return (
     <section className="login">
       <Form name='login'
         inputs={inputs}
-        submit={login}
+        submit={handleLogin}
         submitTxt='Зарегестрироваться'
-        caption='Уже зарегистрированы?'
+        caption='Ещё не зарегистрированы'
         link={link} />
     </section>
   );

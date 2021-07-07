@@ -5,10 +5,18 @@ class AuthApi {
 
   handleResponse(response) {
     if (!response.ok) {
-      throw new Error(response);
+      return Promise.reject(response);
     }
 
     return response.json();
+  }
+
+  setToken(token) {
+    this._token = token;
+  }
+
+  removeToken() {
+    this._token = '';
   }
 
   register(name, email, password) {
@@ -31,6 +39,21 @@ class AuthApi {
       body: JSON.stringify({ email, password })
     })
       .then(this.handleResponse);
+  }
+
+  getInfo() {
+    if (!this._token) {
+      return new Promise.reject();
+    }
+
+    return fetch(`${this._host}/users/me`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': this._token,
+      },
+      method: 'GET',
+    })
+      .then(this.handleResponse)
   }
 }
 
