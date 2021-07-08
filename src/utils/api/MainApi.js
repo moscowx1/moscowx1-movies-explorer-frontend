@@ -1,16 +1,6 @@
-class MainApi {
-  constructor(host) {
-    this._host = host;
-  }
+import Api from './Api';
 
-  handleResponse(response) {
-    if (!response.ok) {
-      return Promise.reject(response);
-    }
-
-    return response.json();
-  }
-
+class MainApi extends Api {
   setToken(token) {
     this._token = token;
   }
@@ -57,6 +47,6 @@ class MainApi {
   }
 }
 
-const mainApi = new MainApi("https://api.mantra.nomoredomains.club");
+const mainApi = new MainApi('https://api.mantra.nomoredomains.club');
 
 export default mainApi;
