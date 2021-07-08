@@ -16,7 +16,7 @@ import ProtectedRoute from '../ProtectedRoute';
 
 import { UserContext } from '../../context/userContext';
 import paths from '../../utils/constants/paths';
-import authApi from '../../utils/api/authApi';
+import MainApi from '../../utils/api/MainApi';
 
 import './index.css';
 
@@ -30,7 +30,7 @@ function App() {
   const isLoggedIn = () => user !== {};
 
 
-  const loadUserInfo = () => authApi
+  const loadUserInfo = () => MainApi
     .getInfo()
     .then(({ name, email }) => setUser(name, email))
     .catch((err) => console.log(err));
@@ -38,18 +38,18 @@ function App() {
   useEffect(() => {
     let token = localStorage.getItem('token');
     if (token) {
-      authApi.setToken(token);
+      MainApi.setToken(token);
       loadUserInfo();
     }
   }, []);
 
   const login = (email, password) =>
-    authApi
+    MainApi
       .login(email, password)
       .then(({ token }) => {
         token = `Bearer ${token}`;
         localStorage.setItem('token', token);
-        authApi.setToken(token);
+        MainApi.setToken(token);
       });
 
   const handleLogin = ({ email, password }) => {
@@ -60,7 +60,7 @@ function App() {
   };
 
   const handleRegister = ({ name, email, password }) => {
-    authApi
+    MainApi
       .register(name, email, password)
       .then(() => login(name, password))
       .then(() => loadUserInfo)
@@ -73,7 +73,8 @@ function App() {
 
   return (
     <div className='app'>
-      <Header handleMenuClick={openMenu} />
+      <Header handleMenuClick={openMenu}
+        isLoggedIn={isLoggedIn} />
       <Switch>
         <ProtectedRoute path={paths.savedMovies}
           component={SavedMovies}

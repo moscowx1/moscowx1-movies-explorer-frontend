@@ -1,12 +1,7 @@
-﻿import { useHistory } from 'react-router';
-import { useContext } from 'react';
+﻿import Form from '../Form';
 
-import Form from '../Form';
-
-import { UserContext } from '../../context/userContext';
 import inputs from './inputs'
 import paths from '../../utils/constants/paths';
-import authApi from '../../utils/api/authApi';
 
 import './index.css';
 

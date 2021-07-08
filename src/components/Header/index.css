@@ -1,7 +1,7 @@
 ﻿.header {
   background-color: #073042;
   margin: 0;
-  padding: 20px 70px 0;
+  padding: 20px 70px 10px;
   flex-direction: row;
   box-sizing: border-box;
   display: flex;

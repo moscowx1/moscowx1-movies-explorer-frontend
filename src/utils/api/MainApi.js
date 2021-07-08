@@ -1,4 +1,4 @@
-class AuthApi {
+class MainApi {
   constructor(host) {
     this._host = host;
   }
@@ -57,6 +57,6 @@ class AuthApi {
   }
 }
 
-const authApi = new AuthApi("https://api.mantra.nomoredomains.club");
+const mainApi = new MainApi("https://api.mantra.nomoredomains.club");
 
-export default authApi;
+export default mainApi;
