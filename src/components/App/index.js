@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import Header from '../Header';
 import Main from '../Main';
 import Footer from '../Footer';
-import Movies from '../Movies/Movies.js';
+import AllMovies from '../Movies/AllMovies.js';
 import SavedMovies from '../Movies/SavedMovies.js';
 import Register from '../Register/';
 import Login from '../Login';
@@ -40,6 +40,7 @@ function App() {
     if (token) {
       MainApi.setToken(token);
       loadUserInfo();
+      history.push(paths.movies);
     }
   }, []);
 
@@ -80,7 +81,7 @@ function App() {
           component={SavedMovies}
           isLoggedIn={isLoggedIn} />
         <ProtectedRoute path={paths.movies}
-          component={Movies}
+          component={AllMovies}
           isLoggedIn={isLoggedIn} />
         <Route path={paths.register}>
           <Register handleRegister={handleRegister} />
