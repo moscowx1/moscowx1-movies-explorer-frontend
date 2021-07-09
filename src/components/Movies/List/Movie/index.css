@@ -45,11 +45,21 @@
   padding-left: 20px;
 }
 
-.movie__preview {
+.mover__preview-wrapper {
   grid-area: preview;
   justify-self: end;
-  max-width: 220px;
-  max-height: 125px;
+  width: 220px;
+  height: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items :center;
+}
+
+.movie__preview {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 @media (max-width: 600px) {

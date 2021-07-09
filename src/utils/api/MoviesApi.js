@@ -11,8 +11,12 @@ class MainApi extends Api {
     })
       .then(this.handleResponse);
   }
+
+  getHost() {
+    return this._host;
+  }
 }
 
-const mainApi = new MainApi('https://api.nomoreparties.co/');
+const mainApi = new MainApi('https://api.nomoreparties.co');
 
 export default mainApi;
