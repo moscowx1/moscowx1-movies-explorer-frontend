@@ -1,8 +1,9 @@
 ﻿import './index.css';
 
-const LoadMoreButton = () => {
+const LoadMoreButton = ({ handleClick }) => {
   return (
-    <button className='movies__more-btn'>
+    <button className='movies__more-btn'
+      onClick={() => handleClick()}>
       Еще
     </button>
   );

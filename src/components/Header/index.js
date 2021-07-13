@@ -21,8 +21,7 @@ const Header = ({ handleMenuClick, isLoggedIn }) => {
 
     if (path === paths.movies ||
       path === paths.profile ||
-      path === paths.savedMovies ||
-      isLoggedIn) {
+      path === paths.savedMovies) {
       return (
         <header className='header header_color_g'>
           <img className='header__logo' src={logo} alt='logo' />

@@ -1,14 +1,6 @@
 import Api from './Api';
 
 class MainApi extends Api {
-  setToken(token) {
-    this._token = token;
-  }
-
-  removeToken() {
-    this._token = '';
-  }
-
   register(name, email, password) {
     return fetch(`${this._host}/signup`, {
       headers: {
@@ -44,6 +36,18 @@ class MainApi extends Api {
       method: 'GET',
     })
       .then(this.handleResponse)
+  }
+
+  updateMe(data) {
+    return fetch(`${this._host}/users/me`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': this._token,
+      },
+      method: 'PATCH',
+      body: JSON.stringify(data)
+    })
+      .then(this.handleResponse);
   }
 }
 

@@ -1,15 +1,15 @@
 const settings = {
   1280 : {
     'defaultCount': 10,
-    'addedCount' : 3,
+    'addCount' : 3,
   },
   768 : {
     'defaultCount': 8,
-    'addedCount' : 2,
+    'addCount' : 2,
   },
   480 : {
     'defaultCount': 8,
-    'addedCount' : 2,
+    'addCount' : 2,
   }
 };
 

@@ -1,13 +1,51 @@
 import Api from './Api';
 
-class MainApi extends Api {
+class MoviesApi extends Api {
+
+  getMoviesHost() {
+    return 'https://api.nomoreparties.co';
+  }
 
   getMovies() {
-    return fetch(`${this._host}/beatfilm-movies`, {
+    return fetch(`${this.getMoviesHost()}/beatfilm-movies`, {
       headers: {
         'Content-type': 'application/json'
       },
       method: 'GET'
+    })
+      .then(this.handleResponse);
+  }
+
+  getMyMovies() {
+    return fetch(`https://api.mantra.nomoredomains.club/movies`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': this._token,
+      },
+      method: 'GET',
+    })
+      .then(this.handleResponse);
+  }
+
+  likeMovie(movie) {
+    return fetch(`https://api.mantra.nomoredomains.club/movies`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': this._token,
+      },
+      method: 'POST',
+      body: JSON.stringify(movie)
+    })
+      .then(this.handleResponse);
+  }
+
+  dislikeMovie(id) {
+    return fetch(`https://api.mantra.nomoredomains.club/movies/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': this._token,
+      },
+      method: 'DELETE',
     })
       .then(this.handleResponse);
   }
@@ -17,6 +55,6 @@ class MainApi extends Api {
   }
 }
 
-const mainApi = new MainApi('https://api.nomoreparties.co');
+const moviesApi = new MoviesApi('https://api.nomoreparties.co');
 
-export default mainApi;
+export default moviesApi;

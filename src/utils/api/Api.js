@@ -6,6 +6,14 @@ class Api {
     this._host = host;
   }
 
+  setToken(token) {
+    this._token = token;
+  }
+
+  removeToken() {
+    this._token = '';
+  }
+
   handleResponse(response) {
     if (!response.ok) {
       return Promise.reject(response);

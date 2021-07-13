@@ -5,60 +5,65 @@ import List from '../List';
 import LoadMoreButton from '../LoadMoreButton';
 import Preloader from '../../Preloader';
 
-import MoviesApi from '../../../utils/api/MoviesApi';
-import moviesSettings from '../../../utils/constants/moviesSettings';
+import movieSizeSettings from '../../../utils/constants/moviesSettings';
 
 import './index.css';
 
-const Movies = ({ onMovieBtnClick, movieBtnImageSetter }) => {
+const Movies = ({ getMovies, handleBtnClick, movieBtnImageSetter }) => {
   const [movies, setMovies] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
-  const [moviesSettings, setMoviesSettings] = useState()
 
-  const setMovieBtnImgs = (movies) => movies.map(movie => movieBtnImageSetter(movie));
+  const sizeSettings = getSizeSettings()
+  const [visibleCount, setVisibleCount] = useState(sizeSettings.defaultCount);
 
-  const updateMoviesSettings = () => {
-    let width = window.innerWidth;
-
-    for(let w in moviesSettings) {
-        if (w > width) {
-          setMoviesSettings(...w);
-          console.log(moviesSettings);
-          break;
-        }
+  function getSizeSettings() {
+    for (let settingsWidth in movieSizeSettings) {
+      if (window.innerWidth > settingsWidth) {
+        return movieSizeSettings[settingsWidth];
+      }
     }
   }
 
-  useEffect(() => {
-    window.addEventListener('resize', updateMoviesSettings());
+  const search = (filters) => {
+    const m = movies.map((movie) => {
+      movie.visible = filters.every(filter => filter(movie));
+      return movie;
+    })
+    setMovies(m);
+  }
 
-    return () => {
-      window.removeEventListener('resize', updateMoviesSettings);
-    }
+  const addMore = () => setVisibleCount(visibleCount + sizeSettings.addCount);
+
+  const setMovieBtnImgs = (movies) => movies.map(movie => movieBtnImageSetter(movie));
+  const initVisibility = (movies) => movies.map(movie => {
+    movie.visible = true
+    return movie;
   });
 
   useEffect(() => {
     setIsLoading(true);
 
-    MoviesApi
-      .getMovies()
+    getMovies()
       .then(setMovieBtnImgs)
+      .then(initVisibility)
       .then((movies) => setMovies(movies))
-      .catch((err) => {
-        console.log(err);
-        alert('Ошибка при загрузке фильмов');
-      })
+      .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
-  }, [])
+  }, []);
 
-
+  const btnClickWrapper = (id) => {
+    setMovies(handleBtnClick(movies, id));
+  }
 
   return (
     <main className='movies'>
       {isLoading && <Preloader />}
-      <Search />
-      <List movies={movies} handleBtnClick={onMovieBtnClick} />
-      <LoadMoreButton />
+      <Search handleSubmit={search}/>
+      <List movies={movies}
+        handleBtnClick={btnClickWrapper}
+        movieVisible={visibleCount} />
+      {visibleCount < movies.length &&  <LoadMoreButton handleClick={addMore}/>}
     </main>
   );
 }

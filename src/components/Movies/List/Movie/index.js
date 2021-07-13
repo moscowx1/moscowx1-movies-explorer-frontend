@@ -4,8 +4,11 @@ import MainApi from '../../../../utils/api/MoviesApi';
 
 const Movie = ({ data, handleBtnClick }) => {
 
-  const getPreviewImg = ({image}) => {
-    return MainApi.getHost() + image.formats.thumbnail.url;
+  const getPreviewImg = (movie) => {
+    if (movie.thumbnail)
+      return movie.thumbnail;
+
+    return MainApi.getHost() + movie.image.formats.thumbnail.url;
   }
 
   const getFormattedDuration = ({ duration }) => {
@@ -29,16 +32,14 @@ const Movie = ({ data, handleBtnClick }) => {
       <p className='movie__title'>{data.nameRU}</p>
       <time className='movie__duration'>{getFormattedDuration(data)}</time>
       <button className='movie__button'
-        onClick={() => handleBtnClick(data.id)}>
+        onClick={() => handleBtnClick(data.id || data._id)}>
         <img className='movie__button-img'
           src={data.btnImg}
           alt='Кнопка' />
       </button>
-      <div className='mover__preview-wrapper'>
-        <img className='movie__preview'
-          src={getPreviewImg(data)}
-          alt={`Превью ${data.name}`} />
-      </div>
+      <img className='movie__preview'
+        src={getPreviewImg(data)}
+        alt={`Превью ${data.name}`} />
     </li>
   );
 };

@@ -3,19 +3,25 @@
 import './index.css';
 import { useState } from "react";
 
-const Search = () => {
+const Search = ({ handleSubmit }) => {
+  const [showShort, setShowShort] = useState(true);
   const [searchTxt, setSearchTxt] = useState('');
 
   const handleInputChange = (evt) => {
-    setSearchTxt(evt.target.value);
+    const value = evt.target.value;
+    setSearchTxt(value);
   }
+
+  const handleTogglerChange = () => setShowShort(!showShort);
 
   const submitWrap = (evt) => {
     evt.preventDefault();
-    if (!searchTxt) {
-      alert('Нужно ввести ключевое слово');
-      return;
-    }
+
+    var reg = new RegExp(searchTxt, 'i');
+    return handleSubmit([
+      (movie) => !searchTxt || reg.test(movie.nameRU),
+      (movie) => showShort || movie.duration > 40
+    ]);
   }
 
   return (
@@ -25,13 +31,13 @@ const Search = () => {
         onSubmit={submitWrap}>
         <input className="search__input"
           placeholder="Фильм"
-          onChange={setSearchTxt} />
+          onChange={handleInputChange} />
         <button type="submit"
           className="search__submit">
           Поиск
         </button>
       </form>
-      <ShortMovieFilter />
+      <ShortMovieFilter toggleShortMovie={handleTogglerChange} />
     </section>
   );
 };

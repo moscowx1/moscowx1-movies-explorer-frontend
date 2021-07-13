@@ -30,6 +30,21 @@
   border-bottom: 1px solid #424242;
 }
 
+.profile__input {
+  border: none;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: right;
+  width: auto;
+  color: inherit;
+  background-color: inherit;
+}
+
+.profile__input:focus {
+  outline: none;
+}
+
 .profile__buttons {
   padding-top: 200px;
   padding-bottom: 60px;
@@ -45,6 +60,12 @@
   font-size: 13px;
   line-height: 16px;
   padding-bottom: 16px;
+  cursor: pointer;
+}
+
+.profile__button:disabled {
+  opacity: .3;
+  cursor: default;
 }
 
 .profile__button_exit {

@@ -17,6 +17,7 @@ import ProtectedRoute from '../ProtectedRoute';
 import { UserContext } from '../../context/userContext';
 import paths from '../../utils/constants/paths';
 import MainApi from '../../utils/api/MainApi';
+import MoviesApi from '../../utils/api/MoviesApi';
 
 import './index.css';
 
@@ -26,8 +27,8 @@ function App() {
   const closeMenu = () => setIsMenuOpened(false);
 
   const { user, setUser } = useContext(UserContext);
+  const [isLoggedIn, setIsLoggedIng] = useState(false);
   const history = useHistory();
-  const isLoggedIn = () => user !== {};
 
 
   const loadUserInfo = () => MainApi
@@ -39,6 +40,8 @@ function App() {
     let token = localStorage.getItem('token');
     if (token) {
       MainApi.setToken(token);
+      MoviesApi.setToken(token);
+      setIsLoggedIng(true);
       loadUserInfo();
       history.push(paths.movies);
     }
@@ -51,6 +54,8 @@ function App() {
         token = `Bearer ${token}`;
         localStorage.setItem('token', token);
         MainApi.setToken(token);
+        MoviesApi.setToken(token);
+        setIsLoggedIng(true);
       });
 
   const handleLogin = ({ email, password }) => {
@@ -72,6 +77,13 @@ function App() {
       });
   };
 
+  const logout = () => {
+    localStorage.setItem('token',);
+    MainApi.removeToken();
+    MoviesApi.removeToken();
+    setIsLoggedIng(false);
+  };
+
   return (
     <div className='app'>
       <Header handleMenuClick={openMenu}
@@ -91,7 +103,8 @@ function App() {
         </Route>
         <ProtectedRoute path={paths.profile}
           component={Profile}
-          isLoggedIn={isLoggedIn} />
+          isLoggedIn={isLoggedIn}
+          logout={logout} />
         <Route path={paths.main} exact={true}>
           <Main />
         </Route>

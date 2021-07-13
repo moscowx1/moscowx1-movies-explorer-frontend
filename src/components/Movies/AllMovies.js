@@ -2,6 +2,8 @@
 
 import Movies from './Movies';
 
+import MoviesApi from "../../utils/api/MoviesApi";
+
 import heart from '../../images/heart.svg';
 import activeHeart from '../../images/activeHeart.svg';
 
@@ -13,18 +15,76 @@ const AllMovies = () => {
     return movie;
   }
 
-  const toggleActiveBtn = (movies, id) => movies.map(movie => {
+  const getLongId = (id) => '0'.repeat(24 - id.toString().length) + id;
+
+  const getMovieDto = (movie) => {
+    const dto = { ...movie };
+    dto.movieId = getLongId(dto.id);
+    delete dto.id;
+    delete dto.visible;
+    dto.trailer = movie.trailerLink;
+    delete dto.trailerLink;
+    delete dto.created_at;
+    delete dto.updated_at;
+    delete dto.btnImg;
+    delete dto.isFavourite;
+    dto.thumbnail = MoviesApi.getMoviesHost() + movie.image.url;
+    dto.image = MoviesApi.getMoviesHost() + movie.image.url;
+    return dto;
+  }
+
+  const toggleMovieLike = (movies, id) => movies.map(movie => {
     if (movie.id !== id) {
       return movie;
     }
+
+    if (movie.isFavourite)
+      MoviesApi.dislikeMovie(movie.myId);
+    else
+      MoviesApi.likeMovie(getMovieDto(movie));
 
     movie.isFavourite = !movie.isFavourite;
     setBtnImage(movie)
     return movie;
   })
 
+  function trimChar(string, charToRemove) {
+    while (string.charAt(0) === charToRemove) {
+      string = string.substring(1);
+    }
+
+    while (string.charAt(string.length - 1) === charToRemove) {
+      string = string.substring(0, string.length - 1);
+    }
+
+    return string;
+  }
+
+  const getMyIds = (movies) => {
+    let res = {};
+    movies.forEach(movie => res[trimChar(movie.movieId, '0')] = movie._id);
+    return res;
+  }
+
+  const getMovies = () => {
+    return MoviesApi
+      .getMyMovies()
+      .then(getMyIds)
+      .then((ids) => {
+        return MoviesApi
+          .getMovies()
+          .then((movies) => movies.map((movie) => {
+            movie.isFavourite = Object.keys(ids).includes(movie.id.toString())
+            if (movie.isFavourite)
+              movie.myId = ids[movie.id];
+            return movie;
+          }));
+      })
+  };
+
   return (
-    <Movies handleBtnClick={toggleActiveBtn}
+    <Movies getMovies={getMovies}
+      handleBtnClick={toggleMovieLike}
       movieBtnImageSetter={setBtnImage} />
   );
 };
