@@ -20,7 +20,7 @@ const Movies = ({ getMovies, handleBtnClick, movieBtnImageSetter }) => {
   const [isNoMovieFound, setMovieNotFound] = useState(false);
 
   function getSizeSettings() {
-    for (let settingsWidth in movieSizeSettings) {
+    for (const settingsWidth in movieSizeSettings) {
       if (window.innerWidth > settingsWidth) {
         return movieSizeSettings[settingsWidth];
       }

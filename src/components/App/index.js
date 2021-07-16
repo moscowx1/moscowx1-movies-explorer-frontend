@@ -36,7 +36,7 @@ function App() {
     .then(({ name, email }) => setUser(name, email));
 
   useEffect(() => {
-    let token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
     if (token) {
       MainApi.setToken(token);
       MoviesApi.setToken(token);

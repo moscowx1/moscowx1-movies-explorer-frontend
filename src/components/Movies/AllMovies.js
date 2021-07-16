@@ -67,7 +67,7 @@ const AllMovies = () => {
   }
 
   const getMyIds = (movies) => {
-    let res = {};
+    const res = {};
     movies.forEach(movie => res[trimChar(movie.movieId || '-1', '0')] = movie._id);
     return res;
   }
