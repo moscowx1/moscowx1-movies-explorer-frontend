@@ -1,5 +1,5 @@
 ﻿import { useHistory, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import AccountButton from '../AccountButton';
 
@@ -16,15 +16,23 @@ const Header = ({ handleMenuClick, isLoggedIn }) => {
 
   history.listen(({ pathname }) => setContent(getContent(pathname)));
 
+  function handleLogoClick(evt) {
+    history.push(paths.main);
+  }
+
   function getContent(path) {
     path = path.toLowerCase();
 
     if (path === paths.movies ||
       path === paths.profile ||
-      path === paths.savedMovies) {
+      path === paths.savedMovies ||
+      isLoggedIn) {
       return (
         <header className='header header_color_g'>
-          <img className='header__logo' src={logo} alt='logo' />
+          <img className='header__logo'
+            src={logo}
+            alt='logo'
+            onClick={handleLogoClick} />
           <div className='header__elem_display_b'>
             <Link className='header__link'
               to={paths.movies}>Фильмы</Link>
@@ -51,7 +59,8 @@ const Header = ({ handleMenuClick, isLoggedIn }) => {
           <div className='header__container'>
             <img className='header__logo header__logo_top-padding_b'
               src={logo}
-              alt='logo' />
+              alt='logo'
+              onClick={handleLogoClick} />
             <h2 className='header__title'>{title}</h2>
           </div>
         </header>
@@ -63,7 +72,8 @@ const Header = ({ handleMenuClick, isLoggedIn }) => {
         <header className='header'>
           <img className='header__logo'
             src={logo}
-            alt='logo' />
+            alt='logo'
+            onClick={handleLogoClick} />
           <div>
             <button className='header__button header__button_transparent'
               onClick={() => history.push(paths.register)}>
@@ -81,7 +91,7 @@ const Header = ({ handleMenuClick, isLoggedIn }) => {
     return '';
   }
 
-return content;
+  return content;
 };
 
 export default Header;
