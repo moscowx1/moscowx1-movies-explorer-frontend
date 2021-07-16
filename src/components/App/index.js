@@ -78,7 +78,6 @@ function App() {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('movies');
-    localStorage.removeItem('savedMovies');
     MainApi.removeToken();
     MoviesApi.removeToken();
     setLoggedIn(false);

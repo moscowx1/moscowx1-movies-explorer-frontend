@@ -68,18 +68,22 @@ const AllMovies = () => {
 
   const getMyIds = (movies) => {
     let res = {};
-    movies.forEach(movie => res[trimChar(movie.movieId, '0')] = movie._id);
+    movies.forEach(movie => res[trimChar(movie.movieId || '-1', '0')] = movie._id);
     return res;
   }
 
-  const getMovies = () => {
+  const getInitMovies = () => {
     const movies = JSON.parse(localStorage.getItem('movies'));
     if (movies) {
       return Promise.resolve(movies);
     }
 
     return MoviesApi
-      .getMyMovies()
+      .getMyMovies();
+  }
+
+  const getMovies = () => {
+    return getInitMovies()
       .then(getMyIds)
       .then((ids) => {
         return MoviesApi
