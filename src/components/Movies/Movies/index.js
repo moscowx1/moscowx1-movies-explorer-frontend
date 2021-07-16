@@ -17,6 +17,8 @@ const Movies = ({ getMovies, handleBtnClick, movieBtnImageSetter }) => {
   const sizeSettings = getSizeSettings()
   const [visibleCount, setVisibleCount] = useState(sizeSettings.defaultCount);
 
+  const [isNoMovieFound, setMovieNotFound] = useState(false);
+
   function getSizeSettings() {
     for (let settingsWidth in movieSizeSettings) {
       if (window.innerWidth > settingsWidth) {
@@ -26,11 +28,14 @@ const Movies = ({ getMovies, handleBtnClick, movieBtnImageSetter }) => {
   }
 
   const search = (filters) => {
-    const m = movies.map((movie) => {
+    const filteredMovie = movies.map((movie) => {
       movie.visible = filters.every(filter => filter(movie));
       return movie;
     })
-    setMovies(m);
+
+    setMovieNotFound(filteredMovie.some(movie => movie.visible));
+
+    setMovies(filteredMovie);
   }
 
   const addMore = () => setVisibleCount(visibleCount + sizeSettings.addCount);
@@ -59,11 +64,13 @@ const Movies = ({ getMovies, handleBtnClick, movieBtnImageSetter }) => {
   return (
     <main className='movies'>
       {isLoading && <Preloader />}
-      <Search handleSubmit={search}/>
+      <Search handleSubmit={search} />
       <List movies={movies}
         handleBtnClick={btnClickWrapper}
         movieVisible={visibleCount} />
-      {visibleCount < movies.length &&  <LoadMoreButton handleClick={addMore}/>}
+      {visibleCount < movies.length &&
+        isNoMovieFound &&
+        <LoadMoreButton handleClick={addMore} />}
     </main>
   );
 }
