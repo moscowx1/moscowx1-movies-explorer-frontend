@@ -4,6 +4,13 @@
   padding-left: 70px;
 }
 
+.movies__not-found-txt {
+  color: white;
+  text-align: center;
+  line-height: 13px;
+  padding-left: 20px;
+}
+
 @media (max-width: 600px) {
   .movies__list {
     padding-right: 10px;
