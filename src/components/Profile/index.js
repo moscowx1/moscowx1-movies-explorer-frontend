@@ -6,71 +6,82 @@ import paths from '../../utils/constants/paths';
 import MainApi from '../../utils/api/MainApi';
 
 import './index.css';
-
+import isEmail from 'validator/es/lib/isEmail';
 
 const Profile = ({ logout }) => {
   const { user } = useContext(UserContext);
+
   const history = useHistory();
 
-  const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
-  const [isChangeDisabled, setIsChangeDisabled] = useState(true);
+  const [isEmailValid, setEmailValidity] = useState(true);
 
-  const updateChangeState = () => setIsChangeDisabled(email === user.email && name === user.name);
+  const [name, setName] = useState(user.name);
+  const [isNameValid, setNameValidity] = useState(true);
 
-  console.log(isChangeDisabled);
+  const isUserInfoChanged = () => name !== user.name || email !== user.email;
+
   const handleLogout = (evt) => {
     logout();
     history.push(paths.main);
   }
 
   const handleNameChange = (evt) => {
-    setName(evt.target.value);
-    updateChangeState();
+    const value = evt.target.value;
+    const valid = evt.target.validity.valid;
+    setName(value);
+    setNameValidity(valid);
   }
 
   const handleEmailChange = (evt) => {
-    setEmail(evt.target.value);
-    updateChangeState();
+    const value = evt.target.value;
+    const valid = evt.target.validity.valid;
+    setEmail(value);
+    setEmailValidity(valid);
   }
 
   const handleChange = (evt) => {
+    evt.preventDefault();
     MainApi
-    .updateMe({ name, email })
-    .then(() => updateChangeState())
-    .catch(() => alert('Ошибка'));
+      .updateMe({ name, email })
+      .then(() => alert('Успешно'))
+      .catch(() => alert('Ошибка'));
   }
 
   return (
     <section className='profile'>
-      <div className='profile__content'>
-        <h2 className='profile__title'>{`Привет, ${user.name}!`}</h2>
+      <form className='profile__content'
+        onSubmit={handleChange}>
+        <h2 className='profile__title'>{`Привет, ${name}!`}</h2>
         <div className='profile__desc'>
           <p>Имя</p>
           <input className='profile__input'
             type='text'
+            minLength={2}
+            required={true}
             defaultValue={user.name}
             onChange={handleNameChange} />
         </div>
         <div className='profile__desc'>
           <p>E-mail</p>
           <input className='profile__input'
-            type='text'
+            type='email'
+            required={true}
+            minLength={2}
             defaultValue={user.email}
             onChange={handleEmailChange} />
         </div>
         <div className='profile__buttons'>
-          <button className='profile__button'
-            disabled={isChangeDisabled}
-            onClick={handleChange}>
-            Редактировать
-          </button>
+          <input className='profile__button'
+            type='submit'
+            disabled={!isNameValid || !isEmailValid || !isUserInfoChanged()}
+            value='Редактировать' />
           <button className='profile__button profile__button_exit'
             onClick={handleLogout}>
             Выйти из аккаунта
           </button>
         </div>
-      </div>
+      </form>
     </section>
   );
 }

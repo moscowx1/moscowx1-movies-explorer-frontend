@@ -26,24 +26,22 @@ function App() {
   const openMenu = () => setIsMenuOpened(true);
   const closeMenu = () => setIsMenuOpened(false);
 
-  const { user, setUser } = useContext(UserContext);
-  const [isLoggedIn, setIsLoggedIng] = useState(false);
+  const { setUser } = useContext(UserContext);
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
 
 
   const loadUserInfo = () => MainApi
     .getInfo()
-    .then(({ name, email }) => setUser(name, email))
-    .catch((err) => console.log(err));
+    .then(({ name, email }) => setUser(name, email));
 
   useEffect(() => {
     let token = localStorage.getItem('token');
     if (token) {
       MainApi.setToken(token);
       MoviesApi.setToken(token);
-      setIsLoggedIng(true);
-      loadUserInfo();
-      history.push(paths.movies);
+      loadUserInfo()
+        .then(() => setLoggedIn(true));
     }
   }, []);
 
@@ -55,7 +53,7 @@ function App() {
         localStorage.setItem('token', token);
         MainApi.setToken(token);
         MoviesApi.setToken(token);
-        setIsLoggedIng(true);
+        setLoggedIn(true);
       });
 
   const handleLogin = ({ email, password }) => {
@@ -81,7 +79,7 @@ function App() {
     localStorage.setItem('token',);
     MainApi.removeToken();
     MoviesApi.removeToken();
-    setIsLoggedIng(false);
+    setLoggedIn(false);
   };
 
   return (
@@ -95,18 +93,18 @@ function App() {
         <ProtectedRoute path={paths.movies}
           component={AllMovies}
           isLoggedIn={isLoggedIn} />
-        <Route path={paths.register}>
-          <Register handleRegister={handleRegister} />
-        </Route>
-        <Route path={paths.login}>
-          <Login handleLogin={handleLogin} />
-        </Route>
         <ProtectedRoute path={paths.profile}
           component={Profile}
           isLoggedIn={isLoggedIn}
           logout={logout} />
         <Route path={paths.main} exact={true}>
           <Main />
+        </Route>
+        <Route path={paths.register}>
+          <Register handleRegister={handleRegister} />
+        </Route>
+        <Route path={paths.login}>
+          <Login handleLogin={handleLogin} />
         </Route>
         <Route path={paths.notFound}>
           <NotFound />
