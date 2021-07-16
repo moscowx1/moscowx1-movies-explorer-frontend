@@ -33,7 +33,7 @@ const Movies = ({ getMovies, handleBtnClick, movieBtnImageSetter }) => {
       return movie;
     })
 
-    setMovieNotFound(filteredMovie.some(movie => movie.visible));
+    setMovieNotFound(!filteredMovie.some(movie => movie.visible));
 
     setMovies(filteredMovie);
   }
@@ -61,7 +61,7 @@ const Movies = ({ getMovies, handleBtnClick, movieBtnImageSetter }) => {
     setMovies(handleBtnClick(movies, id));
   }
 
-  return (
+    return (
     <main className='movies'>
       {isLoading && <Preloader />}
       <Search handleSubmit={search} />
@@ -69,7 +69,7 @@ const Movies = ({ getMovies, handleBtnClick, movieBtnImageSetter }) => {
         handleBtnClick={btnClickWrapper}
         movieVisible={visibleCount} />
       {visibleCount < movies.length &&
-        isNoMovieFound &&
+        !isNoMovieFound &&
         <LoadMoreButton handleClick={addMore} />}
     </main>
   );

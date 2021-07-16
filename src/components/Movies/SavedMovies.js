@@ -10,7 +10,11 @@ const SavedMovies = () => {
   const removeMovie = (movies, id) => {
     MoviesApi.dislikeMovie(id);
 
-    return movies.filter(movie => movie.id !== id || movie._id !== id);
+    const filteredMovies = movies.filter(movie => movie.id !== id || movie._id !== id);
+
+    localStorage.setItem('savedMovies', JSON.stringify(filteredMovies));
+
+    return filteredMovies;
   }
 
   const setBtnImage = (movie) => {
@@ -18,7 +22,15 @@ const SavedMovies = () => {
     return movie;
   };
 
-  const getMovies = () => MoviesApi.getMyMovies();
+  const getMovies = () => {
+    const movies = JSON.parse(localStorage.getItem('savedMovies'));
+    if (movies) {
+      return Promise.resolve(movies);
+    }
+
+    return MoviesApi
+      .getMyMovies()
+  };
 
   return (
     <Movies getMovies={getMovies}

@@ -28,8 +28,8 @@ function App() {
 
   const { setUser } = useContext(UserContext);
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const history = useHistory();
 
+  const history = useHistory();
 
   const loadUserInfo = () => MainApi
     .getInfo()
@@ -76,7 +76,9 @@ function App() {
   };
 
   const logout = () => {
-    localStorage.setItem('token',);
+    localStorage.removeItem('token');
+    localStorage.removeItem('movies');
+    localStorage.removeItem('savedMovies');
     MainApi.removeToken();
     MoviesApi.removeToken();
     setLoggedIn(false);

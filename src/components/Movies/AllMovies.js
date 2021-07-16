@@ -33,20 +33,26 @@ const AllMovies = () => {
     return dto;
   }
 
-  const toggleMovieLike = (movies, id) => movies.map(movie => {
-    if (movie.id !== id) {
+  const toggleMovieLike = (movies, id) => {
+    const updatedMovies = movies.map(movie => {
+      if (movie.id !== id) {
+        return movie;
+      }
+
+      if (movie.isFavourite)
+        MoviesApi.dislikeMovie(movie.myId);
+      else
+        MoviesApi.likeMovie(getMovieDto(movie));
+
+      movie.isFavourite = !movie.isFavourite;
+      setBtnImage(movie)
       return movie;
-    }
+    })
 
-    if (movie.isFavourite)
-      MoviesApi.dislikeMovie(movie.myId);
-    else
-      MoviesApi.likeMovie(getMovieDto(movie));
+    localStorage.setItem('movies', JSON.stringify(updatedMovies));
 
-    movie.isFavourite = !movie.isFavourite;
-    setBtnImage(movie)
-    return movie;
-  })
+    return updatedMovies;
+  }
 
   function trimChar(string, charToRemove) {
     while (string.charAt(0) === charToRemove) {
@@ -67,6 +73,11 @@ const AllMovies = () => {
   }
 
   const getMovies = () => {
+    const movies = JSON.parse(localStorage.getItem('movies'));
+    if (movies) {
+      return Promise.resolve(movies);
+    }
+
     return MoviesApi
       .getMyMovies()
       .then(getMyIds)
@@ -79,6 +90,10 @@ const AllMovies = () => {
               movie.myId = ids[movie.id];
             return movie;
           }));
+      })
+      .then((movies) => {
+        localStorage.setItem('movies', JSON.stringify(movies));
+        return movies;
       })
   };
 
