@@ -5,15 +5,15 @@ import About from "./About";
 import Portfolio from "./Portfolio";
 
 const Main = () => {
-    return (
-        <>
-            <Promo/>
-            <Project/>
-            <Techs/>
-            <About/>
-            <Portfolio/>
-        </>
-    );
+  return (
+    <>
+      <Promo />
+      <Project />
+      <Techs />
+      <About />
+      <Portfolio />
+    </>
+  );
 }
 
 export default Main;

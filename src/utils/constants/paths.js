@@ -1,7 +1,7 @@
 ﻿const paths = {
-  signIn: '/signin',
-  signUp: '/signup',
-  allMovies: '/movies',
+  login: '/signin',
+  register: '/signup',
+  movies: '/movies',
   savedMovies: '/saved-movies',
   profile: '/profile',
   notFound: '/notfound',

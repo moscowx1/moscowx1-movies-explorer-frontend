@@ -56,7 +56,6 @@
     padding-right: 30px;
     padding-left: 30px;
   }
-
   .search__search {
     margin-right: 19px;
   }
@@ -66,12 +65,10 @@
   .search {
     padding: 80px 5px 10px;
   }
-
   .search__input {
     font-size: 14px;
     line-height: 20px;
   }
-
   .search__submit {
     padding: 10px 30px;
   }

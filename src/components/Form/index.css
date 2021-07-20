@@ -18,13 +18,24 @@
 
 .form__input {
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   background-color: #2F2F2F;
   border-radius: 8px;
   font-size: 13px;
   line-height: 16px;
   padding-bottom: 15px;
   padding-top: 15px;
+  padding-left: 10px;
+}
+
+.form__input:-webkit-autofill {
+  -webkit-text-fill-color: white;
+  box-shadow: 0 0 0px 1000px #2F2F2F inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.form__input_onerror {
+  color: red;
 }
 
 .form__label {
@@ -39,6 +50,11 @@
   border-radius: 3px;
   height: 45px;
   border: none;
+  cursor: pointer;
+}
+
+.form__submit:disabled {
+  opacity: .6;
 }
 
 .form__caption-container {
@@ -51,6 +67,14 @@
   font-size: 14px;
   line-height: 17px;
   color: #8B8B8B;
+}
+
+.form__error-caption {
+  color: red;
+  margin: 0;
+  font-size: 10px;
+  line-height: 12px;
+  margin-bottom: 10px;
 }
 
 .form__link {
@@ -70,16 +94,13 @@
   .form__section {
     min-width: 250px;
   }
-
   .form__section:last-child {
     padding-bottom: 30px;
   }
-
   .form__caption {
     font-size: 12px;
     line-height: 15px;
   }
-
   .form__link {
     font-size: 12px;
     line-height: 15px;

@@ -1,37 +1,16 @@
-﻿import {useEffect, useState} from "react";
+﻿import { useEffect, useState } from 'react';
 
-import Search from './Search';
-import List from './List';
-import LoadMoreButton from './LoadMoreButton';
-import MovieWrapper from './MovieWrapper';
 
+import Movies from './Movies';
+
+import MoviesApi from "../../utils/api/MoviesApi";
+
+import { trimChar } from '../../utils/stringFuncs';
 import heart from '../../images/heart.svg';
 import activeHeart from '../../images/activeHeart.svg';
 
-const AllMovies = () => {
-  const [movies, setMovies] = useState([
-    {
-      id: 1,
-      name: "test3",
-      duration: "120",
-      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png",
-      isFavourite: false,
-    },
-    {
-      id: 2,
-      name: "test4",
-      duration: "122:11",
-      img: "https://upload.wikimedia.org/wikipedia/commons/a/aa/Katana_%28common_shema%29.png",
-      isFavourite: true,
-    },
-    {
-      id: 3,
-      name: "test5",
-      duration: "10:12",
-      img: "https://st3.depositphotos.com/8615356/13148/v/600/depositphotos_131487254-stock-illustration-zen-circle-paint-brush-stroke.jpg",
-      isFavourite: false,
-    },
-  ]);
+const AllMovies = ({ allMovies, saveAllMovies, likeMovie, dislikeMovie }) => {
+  const [isLoading, setLoading] = useState(true);
 
   const setBtnImage = (movie) => {
     movie.btnImg = movie.isFavourite
@@ -40,28 +19,88 @@ const AllMovies = () => {
     return movie;
   }
 
+  const getLongId = (id) => '0'.repeat(24 - id.toString().length) + id;
+
+  const getMovieDto = (movie) => {
+
+    const dto = { ...movie };
+    dto.movieId = getLongId(dto.id);
+    dto.trailer = movie.trailerLink;
+    dto.thumbnail = MoviesApi.getMoviesHost() + movie.image.url;
+    dto.image = MoviesApi.getMoviesHost() + movie.image.url;
+
+    delete dto.id;
+    delete dto._id;
+    delete dto.visible;
+    delete dto.trailerLink;
+    delete dto.created_at;
+    delete dto.updated_at;
+    delete dto.btnImg;
+    delete dto.isFavourite;
+    return dto;
+  }
+
+  const toggleMovieLike = (id) => {
+    const movie = allMovies.find((movie) => movie.id === id);
+    const { _id } = movie;
+    if (movie.isFavourite) {
+      MoviesApi
+        .dislikeMovie(_id)
+        .then(() => dislikeMovie(_id));
+    }
+    else {
+      MoviesApi
+        .likeMovie(getMovieDto(movie))
+        .then(likeMovie);
+    }
+  }
+
+  const getMyIds = (movies) => {
+    const res = {};
+    movies.forEach(movie => res[trimChar(movie.movieId || '-1', '0')] = movie._id);
+    return res;
+  }
+
+  const initVisibility = (movies) => movies.map(movie => {
+    movie.visible = true
+    return movie;
+  });
+
+  const setMovieBtnImgs = (movies) => movies.map(movie => {
+    setBtnImage(movie);
+    return movie;
+  });
+
   useEffect(() => {
-    setMovies(movies.map(movie => setBtnImage(movie)));
-  }, []);
+    if (allMovies?.length) {
+      setLoading(false);
+      return;
+    }
 
-  const toggleActiveBtn = (id) => {
-    setMovies(movies.map(movie => {
-      if (movie.id !== id) {
-        return movie;
-      }
-
-      movie.isFavourite = !movie.isFavourite;
-      setBtnImage(movie)
-      return movie;
-    }));
-  };
+    MoviesApi
+      .getMyMovies()
+      .then(getMyIds)
+      .then((ids) => {
+        return MoviesApi
+          .getMovies()
+          .then((movies) => movies.map((movie) => {
+            movie.isFavourite = Object.keys(ids).includes(movie.id.toString())
+            if (movie.isFavourite)
+              movie._id = ids[movie.id];
+            return movie;
+          }));
+      })
+      .then(setMovieBtnImgs)
+      .then(initVisibility)
+      .then((movies) => saveAllMovies(movies))
+      .finally(() => setLoading(false));
+  })
 
   return (
-    <MovieWrapper>
-      <Search/>
-      <List movies={ movies } handleBtnClick={ toggleActiveBtn }/>
-      <LoadMoreButton/>
-    </MovieWrapper>
+    <Movies movies={allMovies}
+      handleBtnClick={toggleMovieLike}
+      saveMovies={saveAllMovies}
+      isLoading={isLoading} />
   );
 };
 

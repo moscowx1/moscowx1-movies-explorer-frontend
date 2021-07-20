@@ -1,41 +1,24 @@
 ﻿import Form from '../Form';
 
-import paths from "../../utils/constants/paths";
+import inputs from './inputs';
+import paths from '../../utils/constants/paths';
 
 import './index.css';
 
-const Register = () => {
-  const inputs = [
-    {
-      name: 'E-mail',
-      attr: {
-        placeholder: 'E-mail',
-        type: 'email',
-        required: 'required',
-      }
-    },
-    {
-      name: 'password',
-      attr: {
-        placeholder: 'пароль',
-        type: 'password',
-        required : 'required',
-      }
-    },
-  ];
-
+const Register = ({ handleRegister }) => {
   const link = {
-    link: paths.signUp,
+    link: paths.login,
     text: 'Войти'
   }
 
   return (
-    <section className="register">
+    <section className='register'>
       <Form name='register'
-            inputs={ inputs }
-            submit='Регистрация'
-            caption='Ещё не зарегистрированы?'
-            link={ link }/>
+        inputs={inputs}
+        submitTxt='Регистрация'
+        submit={handleRegister}
+        caption='Уже зарегистрированы?'
+        link={link} />
     </section>
   );
 };
