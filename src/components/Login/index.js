@@ -16,7 +16,7 @@ const Login = ({ handleLogin }) => {
       <Form name='login'
         inputs={inputs}
         submit={handleLogin}
-        submitTxt='Зарегестрироваться'
+        submitTxt='Войти'
         caption='Ещё не зарегистрированы'
         link={link} />
     </section>

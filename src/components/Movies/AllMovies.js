@@ -1,13 +1,17 @@
-﻿import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from 'react';
+
 
 import Movies from './Movies';
 
 import MoviesApi from "../../utils/api/MoviesApi";
 
+import { trimChar } from '../../utils/stringFuncs';
 import heart from '../../images/heart.svg';
 import activeHeart from '../../images/activeHeart.svg';
 
-const AllMovies = () => {
+const AllMovies = ({ allMovies, saveAllMovies, likeMovie, dislikeMovie }) => {
+  const [isLoading, setLoading] = useState(true);
+
   const setBtnImage = (movie) => {
     movie.btnImg = movie.isFavourite
       ? activeHeart
@@ -18,52 +22,37 @@ const AllMovies = () => {
   const getLongId = (id) => '0'.repeat(24 - id.toString().length) + id;
 
   const getMovieDto = (movie) => {
+
     const dto = { ...movie };
     dto.movieId = getLongId(dto.id);
-    delete dto.id;
-    delete dto.visible;
     dto.trailer = movie.trailerLink;
+    dto.thumbnail = MoviesApi.getMoviesHost() + movie.image.url;
+    dto.image = MoviesApi.getMoviesHost() + movie.image.url;
+
+    delete dto.id;
+    delete dto._id;
+    delete dto.visible;
     delete dto.trailerLink;
     delete dto.created_at;
     delete dto.updated_at;
     delete dto.btnImg;
     delete dto.isFavourite;
-    dto.thumbnail = MoviesApi.getMoviesHost() + movie.image.url;
-    dto.image = MoviesApi.getMoviesHost() + movie.image.url;
     return dto;
   }
 
-  const toggleMovieLike = (movies, id) => {
-    const updatedMovies = movies.map(movie => {
-      if (movie.id !== id) {
-        return movie;
-      }
-
-      if (movie.isFavourite)
-        MoviesApi.dislikeMovie(movie.myId);
-      else
-        MoviesApi.likeMovie(getMovieDto(movie));
-
-      movie.isFavourite = !movie.isFavourite;
-      setBtnImage(movie)
-      return movie;
-    })
-
-    localStorage.setItem('movies', JSON.stringify(updatedMovies));
-
-    return updatedMovies;
-  }
-
-  function trimChar(string, charToRemove) {
-    while (string.charAt(0) === charToRemove) {
-      string = string.substring(1);
+  const toggleMovieLike = (id) => {
+    const movie = allMovies.find((movie) => movie.id === id);
+    const { _id } = movie;
+    if (movie.isFavourite) {
+      MoviesApi
+        .dislikeMovie(_id)
+        .then(() => dislikeMovie(_id));
     }
-
-    while (string.charAt(string.length - 1) === charToRemove) {
-      string = string.substring(0, string.length - 1);
+    else {
+      MoviesApi
+        .likeMovie(getMovieDto(movie))
+        .then(likeMovie);
     }
-
-    return string;
   }
 
   const getMyIds = (movies) => {
@@ -72,18 +61,24 @@ const AllMovies = () => {
     return res;
   }
 
-  const getInitMovies = () => {
-    const movies = JSON.parse(localStorage.getItem('movies'));
-    if (movies) {
-      return Promise.resolve(movies);
+  const initVisibility = (movies) => movies.map(movie => {
+    movie.visible = true
+    return movie;
+  });
+
+  const setMovieBtnImgs = (movies) => movies.map(movie => {
+    setBtnImage(movie);
+    return movie;
+  });
+
+  useEffect(() => {
+    if (allMovies?.length) {
+      setLoading(false);
+      return;
     }
 
-    return MoviesApi
-      .getMyMovies();
-  }
-
-  const getMovies = () => {
-    return getInitMovies()
+    MoviesApi
+      .getMyMovies()
       .then(getMyIds)
       .then((ids) => {
         return MoviesApi
@@ -91,20 +86,21 @@ const AllMovies = () => {
           .then((movies) => movies.map((movie) => {
             movie.isFavourite = Object.keys(ids).includes(movie.id.toString())
             if (movie.isFavourite)
-              movie.myId = ids[movie.id];
+              movie._id = ids[movie.id];
             return movie;
           }));
       })
-      .then((movies) => {
-        localStorage.setItem('movies', JSON.stringify(movies));
-        return movies;
-      })
-  };
+      .then(setMovieBtnImgs)
+      .then(initVisibility)
+      .then((movies) => saveAllMovies(movies))
+      .finally(() => setLoading(false));
+  })
 
   return (
-    <Movies getMovies={getMovies}
+    <Movies movies={allMovies}
       handleBtnClick={toggleMovieLike}
-      movieBtnImageSetter={setBtnImage} />
+      saveMovies={saveAllMovies}
+      isLoading={isLoading} />
   );
 };
 

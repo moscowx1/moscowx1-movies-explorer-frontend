@@ -1,18 +1,17 @@
-﻿import { useEffect, useState } from "react";
-
-import Movies from './Movies';
+﻿import Movies from './Movies';
 
 import MoviesApi from "../../utils/api/MoviesApi";
 
 import cross from '../../images/cross.svg';
+import { useEffect, useState } from 'react';
 
-const SavedMovies = () => {
-  const removeMovie = (movies, id) => {
-    MoviesApi.dislikeMovie(id);
+const SavedMovies = ({ savedMovies, saveSavedMovies, dislikeMovie }) => {
+  const [isLoading, setLoading] = useState(true);
 
-    const filteredMovies = movies.filter(movie => movie._id !== id);
-
-    return filteredMovies;
+  const removeMovie = (id) => {
+    MoviesApi
+      .dislikeMovie(id)
+      .then(() => dislikeMovie(id));
   }
 
   const setBtnImage = (movie) => {
@@ -20,15 +19,35 @@ const SavedMovies = () => {
     return movie;
   };
 
-  const getMovies = () => {
-    return MoviesApi
+  const setMovieBtnImgs = (movies) => movies.map(movie => {
+    setBtnImage(movie);
+    return movie;
+  });
+
+  const initVisibility = (movies) => movies.map(movie => {
+    movie.visible = true
+    return movie;
+  });
+
+  useEffect(() => {
+    if (savedMovies?.length) {
+      setLoading(false);
+      return;
+    }
+
+    MoviesApi
       .getMyMovies()
-  };
+      .then(initVisibility)
+      .then(setMovieBtnImgs)
+      .then(saveSavedMovies)
+      .finally(() => setLoading(false));
+  }, [])
 
   return (
-    <Movies getMovies={getMovies}
+    <Movies movies={savedMovies}
+      saveMovies={saveSavedMovies}
       handleBtnClick={removeMovie}
-      movieBtnImageSetter={setBtnImage} />
+      isLoading={isLoading} />
   );
 }
 

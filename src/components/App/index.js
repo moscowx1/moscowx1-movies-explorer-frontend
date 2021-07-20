@@ -19,7 +19,11 @@ import paths from '../../utils/constants/paths';
 import MainApi from '../../utils/api/MainApi';
 import MoviesApi from '../../utils/api/MoviesApi';
 
+import activeHeart from '../../images/activeHeart.svg';
+import heart from '../../images/heart.svg';
+import cross from '../../images/cross.svg';
 import './index.css';
+import { trimChar } from '../../utils/stringFuncs';
 
 function App() {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
@@ -28,6 +32,9 @@ function App() {
 
   const { setUser } = useContext(UserContext);
   const [isLoggedIn, setLoggedIn] = useState(false);
+
+  const [allMovies, setAllMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
 
   const history = useHistory();
 
@@ -41,9 +48,67 @@ function App() {
       MainApi.setToken(token);
       MoviesApi.setToken(token);
       loadUserInfo()
-        .then(() => setLoggedIn(true));
+        .then(() => setLoggedIn(true))
+        .then(() => history.goBack());
     }
   }, []);
+
+  useEffect(() => {
+    const allMoviesLocal = JSON.parse(localStorage.getItem('movies'));
+    if (allMoviesLocal) {
+      setAllMovies(allMoviesLocal);
+    }
+
+    const savedMoviesLocal = JSON.parse(localStorage.getItem('savedMovies'));
+    if (savedMoviesLocal) {
+      setSavedMovies(savedMoviesLocal);
+    }
+  }, []);
+
+  const saveAllMovies = (movies) => {
+    localStorage.setItem('movies', JSON.stringify(movies));
+    setAllMovies(movies);
+  }
+
+  const likeMovie = (likedMovie) => {
+    likedMovie.visible = true;
+    likedMovie.btnImg = cross;
+    saveSavedMovies([
+      ...savedMovies,
+      likedMovie
+    ]);
+
+    saveAllMovies(allMovies.map((movie) => {
+      if (trimChar(likedMovie.movieId, '0') !== movie.id.toString()) {
+        return movie;
+      }
+
+      movie._id = likedMovie._id;
+      movie.isFavourite = true;
+      movie.btnImg = activeHeart;
+      return movie;
+    }));
+  }
+
+  const dislikeMovie = (id) => {
+    saveSavedMovies(savedMovies.filter(({ _id }) => _id !== id));
+
+    saveAllMovies(allMovies.map((movie) => {
+      if (id !== movie?._id?.toString()) {
+        return movie;
+      }
+
+      movie._id = '';
+      movie.isFavourite = false;
+      movie.btnImg = heart;
+      return movie;
+    }));
+  }
+
+  const saveSavedMovies = (movies) => {
+    localStorage.setItem('savedMovies', JSON.stringify(movies));
+    setSavedMovies(movies);
+  }
 
   const login = (email, password) =>
     MainApi
@@ -90,9 +155,16 @@ function App() {
       <Switch>
         <ProtectedRoute path={paths.savedMovies}
           component={SavedMovies}
+          savedMovies={savedMovies}
+          saveSavedMovies={saveSavedMovies}
+          dislikeMovie={dislikeMovie}
           isLoggedIn={isLoggedIn} />
         <ProtectedRoute path={paths.movies}
           component={AllMovies}
+          allMovies={allMovies}
+          saveAllMovies={saveAllMovies}
+          likeMovie={likeMovie}
+          dislikeMovie={dislikeMovie}
           isLoggedIn={isLoggedIn} />
         <ProtectedRoute path={paths.profile}
           component={Profile}
